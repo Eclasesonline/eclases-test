@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clase en vivo - E-clases</title>
+
   <style>
     body {
       margin: 0;
@@ -13,10 +14,18 @@
       text-align: center;
       padding: 40px 20px;
     }
+
     .loader {
       font-size: 1.2rem;
       color: #2db8bc;
       margin-top: 40px;
+    }
+
+    #zmmtg-root {
+      position: relative;
+      z-index: 999;
+      height: 100vh;
+      width: 100%;
     }
   </style>
 </head>
@@ -24,7 +33,7 @@
   <h1>Conectando a tu clase en vivo... 🎥</h1>
   <p class="loader">Por favor espera mientras se inicia la videollamada...</p>
 
- <div id="zmmtg-root" style="position: relative; z-index: 999; height: 100vh; width: 100%;"></div>
+  <div id="zmmtg-root"></div>
   <div id="aria-notify-area"></div>
 
   <!-- SDK de Zoom -->
@@ -37,17 +46,15 @@
     ZoomMtg.preLoadWasm();
     ZoomMtg.prepareJssdk();
 
-    // Aquí se colocarán las credenciales desde el backend o variables temporales
     const meetConfig = {
-  sdkKey: "0h6AijHjnh20xhdei4XLTCt4BbUSvTRzoqRh",
-  signature: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZGtLZXkiOiIwaDZBaWpIam5oMjB4aGRlaTRYTFRDdDRCYlVTdlRSem9xUmgiLCJtbiI6IjEyMzQ1Njc4OSIsInJvbGUiOjEsImlhdCI6MTc0NDM0MjgwMiwiZXhwIjoxNzQ0MzUwMDAyLCJhcHBLZXkiOiIwaDZBaWpIam5oMjB4aGRlaTRYTFRDdDRCYlVTdlRSem9xUmgiLCJ0b2tlbkV4cCI6MTc0NDM1MDAwMn0.vhU-cxpTrQCUehO3yQt_JQAQHilY7lCzWXTBppY5gEc",
-  meetingNumber: "123456789",
-  passWord: "",
-  userName: "Carla - Profesora",
-  userEmail: "",
-  role: 1
-};
-
+      sdkKey: "0h6AijHjnh20xhdei4XLTCt4BbUSvTRzoqRh",
+      signature: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZGtLZXkiOiIwaDZBaWpIam5oMjB4aGRlaTRYTFRDdDRCYlVTdlRSem9xUmgiLCJtbiI6IjEyMzQ1Njc4OSIsInJvbGUiOjEsImlhdCI6MTc0NDM0MjgwMiwiZXhwIjoxNzQ0MzUwMDAyLCJhcHBLZXkiOiIwaDZBaWpIam5oMjB4aGRlaTRYTFRDdDRCYlVTdlRSem9xUmgiLCJ0b2tlbkV4cCI6MTc0NDM1MDAwMn0.vhU-cxpTrQCUehO3yQt_JQAQHilY7lCzWXTBppY5gEc",
+      meetingNumber: "123456789",
+      passWord: "",
+      userName: "Carla - Profesora",
+      userEmail: "",
+      role: 1
+    };
 
     ZoomMtg.init({
       leaveUrl: "https://eclases-test.vercel.app",
@@ -62,12 +69,12 @@
             console.log("Clase iniciada 🎉");
           },
           error: function (err) {
-            console.error(err);
+            console.error("Error al unirse:", err);
           }
         });
       },
       error: function (err) {
-        console.error(err);
+        console.error("Error en init:", err);
       }
     });
   </script>
