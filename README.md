@@ -1,1 +1,1 @@
-# eclases-test
+Plataforma de E-clases
