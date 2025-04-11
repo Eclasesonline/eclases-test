@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clase en vivo - E-clases</title>
   <style>
     body {
@@ -18,7 +18,9 @@
       color: #2db8bc;
       margin-top: 40px;
     }
-    #meetingSDKElement {
+    #zmmtg-root {
+      position: relative;
+      z-index: 999;
       height: 100vh;
       width: 100%;
     }
@@ -28,41 +30,41 @@
   <h1>Conectando a tu clase en vivo... 🎥</h1>
   <p class="loader">Por favor espera mientras se inicia la videollamada...</p>
 
-  <div id="meetingSDKElement"></div>
+  <div id="zmmtg-root"></div>
+  <div id="aria-notify-area"></div>
 
-  <!-- Zoom Video SDK UI Toolkit -->
-  <script src="https://source.zoom.us/sdk/videowebsdk/embedded/1.11.0/zoom-sdk-embedded.min.js"></script>
+  <!-- SDK UI Toolkit -->
+  <script src="https://source.zoom.us/2.11.0/lib/vendor/react.min.js"></script>
+  <script src="https://source.zoom.us/2.11.0/lib/vendor/react-dom.min.js"></script>
+  <script src="https://source.zoom.us/zoom-meeting-2.11.0.min.js"></script>
 
   <script>
-    const client = ZoomVideo.createClient();
+    ZoomMtg.setZoomJSLib('https://source.zoom.us/2.11.0/lib', '/av');
+    ZoomMtg.preLoadWasm();
+    ZoomMtg.prepareJssdk();
 
-    client.init({
-      zoomAppRoot: document.getElementById('meetingSDKElement'),
-      language: 'es-ES',
-      customize: {
-        video: {
-          isResizable: true,
-          viewSizes: {
-            default: {
-              width: 800,
-              height: 600,
-            }
+    ZoomMtg.init({
+      leaveUrl: "https://eclases-test.vercel.app",
+      success: function () {
+        ZoomMtg.join({
+          sdkKey: "0h6AijHjnh20xhdei4XLTCt4BbUSvTRzoqRh",
+          signature: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZGtLZXkiOiIwaDZBaWpIam5oMjB4aGRlaTRYTFRDdDRCYlVTdlRSem9xUmgiLCJtbiI6IjYzNDA4MjAyOTEiLCJyb2xlIjoxLCJpYXQiOjE3NDQzNDM4OTAsImV4cCI6MTc0NDM1MTA5MCwiYXBwS2V5IjoiMGg2QWlqSGpuaDIweGhkZWk0WExUQ3Q0QmJVU3ZUUnpvcVJoIiwidG9rZW5FeHAiOjE3NDQzNTEwOTB9.C5s3GCPWf61G3QJQ--joWRyrX-hknnQ1VdGJO_wTtwc",
+          meetingNumber: "6340820291",
+          userName: "Carla - Profesora",
+          passWord: "",
+          success: function () {
+            console.log("Clase iniciada 🎉");
+          },
+          error: function (err) {
+            console.error("Error al unirse:", err);
           }
-        }
+        });
+      },
+      error: function (err) {
+        console.error("Error en init:", err);
       }
-    });
-
-    client.join({
-      sdkKey: '0h6AijHjnh20xhdei4XLTCt4BbUSvTRzoqRh',
-      signature: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZGtLZXkiOiIwaDZBaWpIam5oMjB4aGRlaTRYTFRDdDRCYlVTdlRSem9xUmgiLCJtbiI6IjYzNDA4MjAyOTEiLCJyb2xlIjoxLCJpYXQiOjE3NDQzNDM4OTAsImV4cCI6MTc0NDM1MTA5MCwiYXBwS2V5IjoiMGg2QWlqSGpuaDIweGhkZWk0WExUQ3Q0QmJVU3ZUUnpvcVJoIiwidG9rZW5FeHAiOjE3NDQzNTEwOTB9.C5s3GCPWf61G3QJQ--joWRyrX-hknnQ1VdGJO_wTtwc',
-      userName: 'Carla - Profesora',
-      meetingNumber: '6340820291',
-      password: '',
-    }).then(() => {
-      console.log('Clase iniciada con UI Toolkit 🎉');
-    }).catch((error) => {
-      console.error('Error al iniciar clase:', error);
     });
   </script>
 </body>
 </html>
+
